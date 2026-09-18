@@ -1,0 +1,296 @@
+/* === БАЗА === */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --pac: #ffcc00;
+  --red: #ff2b2b;
+  --pink: #ffb8ff;
+  --cyan: #00ffff;
+  --orange: #ffb852;
+  --bg: #000;
+  --bg-alt: #0a0a2a;
+  --text: #ffffff;
+  --muted: #9aa0c0;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  overflow-x: hidden;
+}
+
+a { color: var(--pac); text-decoration: none; transition: 0.2s; }
+a:hover { color: #fff; text-shadow: 0 0 8px var(--pac); }
+
+h1, h2, .logo, .btn, .hero__score {
+  font-family: "Press Start 2P", monospace;
+  letter-spacing: 1px;
+}
+
+.container { max-width: 1000px; margin: 0 auto; padding: 0 16px; }
+
+/* === ПАКМАН (чистый CSS) === */
+.pac,
+.hero__pac {
+  display: inline-block;
+  background: var(--pac);
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 0 20px var(--pac), 0 0 40px rgba(255, 204, 0, 0.4);
+}
+
+.pac { width: 16px; height: 16px; vertical-align: middle; margin-right: 8px; }
+
+.hero__pac {
+  width: 100px; height: 100px;
+  margin: 0 auto 24px;
+  animation: chomp 0.4s infinite alternate;
+}
+
+/* "Рот" пакмана — вырезаем треугольник через clip-path */
+.pac::after,
+.hero__pac::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(0, -50%);
+  width: 60%; height: 60%;
+  background: var(--bg);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+@keyframes chomp {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-30deg); }
+}
+
+/* === ПРИЗРАКИ === */
+.ghost {
+  display: inline-block;
+  width: 20px; height: 20px;
+  border-radius: 10px 10px 2px 2px;
+  margin-right: 10px;
+  vertical-align: middle;
+  position: relative;
+  box-shadow: 0 0 12px currentColor;
+}
+.ghost::before,
+.ghost::after {
+  content: "";
+  position: absolute;
+  top: 6px; width: 4px; height: 4px;
+  background: #fff; border-radius: 50%;
+}
+.ghost::before { left: 4px; }
+.ghost::after  { right: 4px; }
+
+.ghost--red    { background: var(--red);    color: var(--red); }
+.ghost--pink   { background: var(--pink);   color: var(--pink); }
+.ghost--cyan   { background: var(--cyan);   color: var(--cyan); }
+.ghost--orange { background: var(--orange); color: var(--orange); }
+
+/* === ШАПКА === */
+.header {
+  position: sticky; top: 0;
+  background: rgba(0, 0, 0, 0.9);
+  border-bottom: 2px solid #1a1a4a;
+  backdrop-filter: blur(6px);
+  z-index: 10;
+}
+.header__inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px; flex-wrap: wrap; gap: 12px;
+}
+.logo {
+  color: var(--pac); font-size: 0.85rem;
+  display: flex; align-items: center;
+  text-shadow: 0 0 8px var(--pac);
+}
+.nav { display: flex; gap: 16px; flex-wrap: wrap; }
+.nav a {
+  color: #fff; font-size: 0.9rem;
+  position: relative;
+}
+.nav a:hover { color: var(--pac); }
+
+/* === HERO === */
+.hero {
+  padding: 60px 0 40px;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 0%, #12123a 0%, #000 70%);
+  position: relative;
+  overflow: hidden;
+}
+.hero__title {
+  font-size: 1.5rem; margin-bottom: 12px;
+  color: var(--pac);
+  text-shadow: 0 0 12px var(--pac), 0 0 24px rgba(255,204,0,0.5);
+}
+.hero__subtitle { color: var(--muted); margin-bottom: 16px; }
+.hero__score {
+  font-size: 0.75rem; color: #fff;
+  margin-bottom: 24px; letter-spacing: 2px;
+}
+.hero__score span { color: var(--pac); }
+
+.btn {
+  display: inline-block;
+  padding: 14px 24px;
+  background: var(--pac); color: #000 !important;
+  border: 3px solid #fff;
+  border-radius: 0;
+  font-size: 0.8rem;
+  box-shadow: 4px 4px 0 var(--red);
+  transition: 0.15s;
+}
+.btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--red);
+}
+
+/* Точки-пеллеты внизу hero */
+.pellets {
+  position: absolute; bottom: 16px; left: 0; right: 0;
+  height: 6px;
+  background-image: radial-gradient(circle, #fff 2px, transparent 2px);
+  background-size: 24px 6px;
+  background-position: center;
+  opacity: 0.6;
+}
+
+/* === СЕКЦИИ === */
+.section { padding: 48px 0; }
+.section--alt {
+  background: var(--bg-alt);
+  border-top: 2px solid #1a1a4a;
+  border-bottom: 2px solid #1a1a4a;
+}
+.section__title {
+  font-size: 1rem;
+  margin-bottom: 24px;
+  color: var(--pac);
+  display: flex; align-items: center;
+  text-shadow: 0 0 8px rgba(255,204,0,0.6);
+}
+
+/* === О СЕБЕ === */
+#about p { margin-bottom: 12px; color: #d0d0e0; }
+.achievements {
+  list-style: none; margin-top: 12px;
+}
+.achievements li {
+  padding: 8px 0 8px 28px;
+  position: relative;
+  border-bottom: 1px dashed #1a1a4a;
+  color: #d0d0e0;
+}
+.achievements li::before {
+  content: "";
+  position: absolute; left: 4px; top: 50%;
+  transform: translateY(-50%);
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--pac);
+  box-shadow: 0 0 8px var(--pac);
+}
+
+/* === НАВЫКИ === */
+.skills { display: grid; gap: 14px; }
+.skill {
+  background: #0f0f2a;
+  padding: 14px;
+  border: 2px solid #1a1a4a;
+  border-radius: 0;
+}
+.skill h3 {
+  font-size: 0.9rem; margin-bottom: 8px;
+  color: #fff;
+}
+.skill .bar {
+  height: 10px; background: #1a1a4a;
+  overflow: hidden; margin-bottom: 6px;
+  border: 1px solid #2a2a5a;
+}
+.skill .bar div {
+  height: 100%;
+  background: linear-gradient(90deg, var(--pac), var(--orange));
+  box-shadow: 0 0 12px var(--pac);
+}
+.skill span {
+  font-size: 0.75rem; color: var(--pac);
+  font-family: "Press Start 2P", monospace;
+}
+
+/* === РАБОТЫ === */
+.portfolio { display: grid; gap: 18px; }
+.card {
+  background: #0f0f2a;
+  padding: 16px;
+  border: 2px solid #1a1a4a;
+  transition: 0.2s;
+}
+.card:hover {
+  border-color: var(--pac);
+  box-shadow: 0 0 20px rgba(255,204,0,0.3);
+  transform: translateY(-3px);
+}
+.thumb {
+  font-size: 2.5rem; text-align: center;
+  background: #000;
+  border: 2px dashed #2a2a5a;
+  padding: 20px 0; margin-bottom: 12px;
+}
+.card h3 { font-size: 1rem; margin-bottom: 6px; color: var(--pac); }
+.card p { color: #b0b0d0; font-size: 0.9rem; }
+
+/* === КОНТАКТЫ === */
+.contacts { list-style: none; }
+.contacts li {
+  padding: 10px 0;
+  border-bottom: 1px dashed #1a1a4a;
+  color: #d0d0e0;
+}
+.contacts li:last-child { border-bottom: none; }
+
+/* === ПОДВАЛ === */
+.footer {
+  background: #000;
+  border-top: 2px solid #1a1a4a;
+  padding: 24px 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.footer__hint {
+  margin-top: 8px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.7rem;
+  color: var(--red);
+  text-shadow: 0 0 8px var(--red);
+  animation: blink 1.5s infinite;
+}
+@keyframes blink {
+  50% { opacity: 0.3; }
+}
+
+/* === ПЛАНШЕТ 768px === */
+@media (min-width: 768px) {
+  .hero__title { font-size: 1.8rem; }
+  .hero__pac { width: 130px; height: 130px; }
+  .section__title { font-size: 1.1rem; }
+  .skills { grid-template-columns: repeat(2, 1fr); }
+  .portfolio { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* === ДЕСКТОП 1024px === */
+@media (min-width: 1024px) {
+  .hero { padding: 80px 0 60px; }
+  .hero__title { font-size: 2.2rem; }
+  .hero__pac { width: 150px; height: 150px; }
+  .section { padding: 64px 0; }
+  .section__title { font-size: 1.25rem; }
+  .skills { grid-template-columns: repeat(3, 1fr); }
+  .portfolio { grid-template-columns: repeat(3, 1fr); }
+}
